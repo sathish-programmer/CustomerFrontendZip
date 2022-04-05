@@ -1,13 +1,14 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const WebSocket = require("ws");
-var socket = new WebSocket("wss://10.13.228.3:8445/CustomerControllerWeb/chat");
+var avaya_chat_url = "wss://10.13.228.3:8445/CustomerControllerWeb/chat";
+var socket = new WebSocket(avaya_chat_url);
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-
+require("dotenv/config");
 // telegram part
 const TelegramBot = require("node-telegram-bot-api");
-const token = "5278387869:AAELJRW7dglCm2oMQBYyi-C7Rb40l8UsvVs";
+const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 // var emoji = require("node-emoji");
@@ -65,7 +66,7 @@ app.get("/api/initChat", function (req, res) {
   var getEmail = req.query.email;
   var getName = req.query.name;
   try {
-    socket = new WebSocket("wss://10.13.228.3:8445/CustomerControllerWeb/chat");
+    socket = new WebSocket(avaya_chat_url);
 
     var messages = {
       apiVersion: "1.0",
