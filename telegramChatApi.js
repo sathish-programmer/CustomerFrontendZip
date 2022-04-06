@@ -10,7 +10,7 @@ require("dotenv/config");
 const TelegramBot = require("node-telegram-bot-api");
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
-
+// let connections = [];
 // var emoji = require("node-emoji");
 var testingTeleBot = false;
 /* end */
@@ -63,118 +63,118 @@ var queueStatusDelayTimeout = 3500;
 var webOnHoldInterval;
 var queueStatusDelay;
 
-app.get("/api/initChat", function (req, res) {
-  var getMsg = req.query.msg;
-  var getEmail = req.query.email;
-  var getName = req.query.name;
-  try {
-    socket = new WebSocket(avaya_chat_url);
+// app.get("/api/initChat", function (req, res) {
+//   var getMsg = req.query.msg;
+//   var getEmail = req.query.email;
+//   var getName = req.query.name;
+//   try {
+//     socket = new WebSocket(avaya_chat_url);
 
-    var messages = {
-      apiVersion: "1.0",
-      type: "request",
-      body: {
-        method: "requestChat",
-        guid: guid,
-        authenticationKey: ak,
-        deviceType:
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36",
-        requestTranscript: false,
-        intrinsics: {
-          email: getEmail,
-          name: getName,
-          country: "+91",
-          area: "95970",
-          phoneNumber: "42107",
-          skillset: "WC_Default_Skillset",
-          customFields: [
-            {
-              title: "address",
-              value: "114, Achari Street, Modaiyur",
-            },
-          ],
-        },
-      },
-    };
-    socket.onopen = function () {
-      console.log("[open] Connection established");
-      let msg_resp = JSON.stringify(messages);
-      socket.send(msg_resp);
-    };
+//     var messages = {
+//       apiVersion: "1.0",
+//       type: "request",
+//       body: {
+//         method: "requestChat",
+//         guid: guid,
+//         authenticationKey: ak,
+//         deviceType:
+//           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36",
+//         requestTranscript: false,
+//         intrinsics: {
+//           email: getEmail,
+//           name: getName,
+//           country: "+91",
+//           area: "95970",
+//           phoneNumber: "42107",
+//           skillset: "WC_Default_Skillset",
+//           customFields: [
+//             {
+//               title: "address",
+//               value: "114, Achari Street, Modaiyur",
+//             },
+//           ],
+//         },
+//       },
+//     };
+//     socket.onopen = function () {
+//       console.log("[open] Connection established");
+//       let msg_resp = JSON.stringify(messages);
+//       socket.send(msg_resp);
+//     };
 
-    // getting msg
-    socket.onmessage = function (event) {
-      var msg = JSON.parse(event.data),
-        body = msg.body,
-        method = body.method;
-      // Handle the message according to the type and method.
-      if (msg.type === messageTypeNotification) {
-        handleNotification(msg);
-      } else if (msg.type === messageTypeError) {
-        console.log(
-          "An error occurred " + body.code + " (" + body.errorMessage + ")"
-        );
-      } else if (msg.type === messageTypeAck) {
-        // Nothing to do for acks
-      } else if (msg.type === messageTypeNewChatAck) {
-        guid = body.guid;
-        console.log("Chat request approved");
-      } else {
-        throw new TypeError("Unknown message type:\n" + msg);
-      }
-    };
+//     // getting msg
+//     socket.onmessage = function (event) {
+//       var msg = JSON.parse(event.data),
+//         body = msg.body,
+//         method = body.method;
+//       // Handle the message according to the type and method.
+//       if (msg.type === messageTypeNotification) {
+//         handleNotification(msg);
+//       } else if (msg.type === messageTypeError) {
+//         console.log(
+//           "An error occurred " + body.code + " (" + body.errorMessage + ")"
+//         );
+//       } else if (msg.type === messageTypeAck) {
+//         // Nothing to do for acks
+//       } else if (msg.type === messageTypeNewChatAck) {
+//         guid = body.guid;
+//         console.log("Chat request approved");
+//       } else {
+//         throw new TypeError("Unknown message type:\n" + msg);
+//       }
+//     };
 
-    let respMessage = JSON.stringify({
-      Name: getName,
-      Email: getEmail,
-      Message: getMsg,
-    });
-    // res.send(respMessage);
-    return res.json({
-      success: true,
-      name: getName,
-      email: getEmail,
-      message: "User Started chat",
-    });
-  } catch (err) {
-    return res.json({
-      success: false,
-      name: getName,
-      email: getEmail,
-      message: err,
-    });
-  }
-});
+//     let respMessage = JSON.stringify({
+//       Name: getName,
+//       Email: getEmail,
+//       Message: getMsg,
+//     });
+//     // res.send(respMessage);
+//     return res.json({
+//       success: true,
+//       name: getName,
+//       email: getEmail,
+//       message: "User Started chat",
+//     });
+//   } catch (err) {
+//     return res.json({
+//       success: false,
+//       name: getName,
+//       email: getEmail,
+//       message: err,
+//     });
+//   }
+// });
 
-app.get("/api/sendNewMsg", async function (req, res) {
-  try {
-    let getMsg = req.query.msg;
-    let currTime = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    if (getMsg !== "") {
-      var message_new = {
-        apiVersion: "1.0",
-        type: "request",
-        body: {
-          method: "newMessage",
-          message: getMsg,
-        },
-      };
-      let msg_new = JSON.stringify(message_new);
-      socket.send(msg_new);
-      console.log("User: " + getMsg + " - Sent at " + currTime);
-    }
-    let respMessage = JSON.stringify({
-      Message: getMsg,
-    });
-    return res.json({ success: true, message: getMsg });
-  } catch (err) {
-    return res.json({ success: false, message: err });
-  }
-});
+// app.get("/api/sendNewMsg", async function (req, res) {
+//   try {
+//     let getMsg = req.query.msg;
+//     let currTime = new Date().toLocaleTimeString([], {
+//       hour: "2-digit",
+//       minute: "2-digit",
+//       second: "2-digit",
+//     });
+//     if (getMsg !== "") {
+//       var message_new = {
+//         apiVersion: "1.0",
+//         type: "request",
+//         body: {
+//           method: "newMessage",
+//           message: getMsg,
+//         },
+//       };
+//       let msg_new = JSON.stringify(message_new);
+//       socket.send(msg_new);
+//       console.log("User: " + getMsg + " - Sent at " + currTime);
+//     }
+//     let respMessage = JSON.stringify({
+//       Message: getMsg,
+//     });
+//     return res.json({ success: true, message: getMsg });
+//   } catch (err) {
+//     return res.json({ success: false, message: err });
+//   }
+// });
 
 function handleNotification(message) {
   // NOSONAR Reason: too complex, but cannot be reduced further
@@ -241,10 +241,15 @@ function notifyCloseConversation(body) {
   }
 }
 
+var anAgentJoinMsg;
+var anAgentJoinMsgStat = true;
 function notifyNewParticipant(body) {
   "use strict";
 
   console.log("An agent has joined the chat");
+
+  anAgentJoinMsg = "An agent has joined the chat";
+
   var agents = body.participants;
   clearInterval(webOnHoldInterval);
   clearTimeout(queueStatusDelay);
@@ -265,6 +270,11 @@ function notifyNewMessage(body) {
       date.toLocaleTimeString()
   );
   if ((chatIdBot != "" || chatIdBot != undefined) && testingTeleBot) {
+    if (anAgentJoinMsgStat) {
+      bot.sendMessage(chatIdBot, anAgentJoinMsg);
+      anAgentJoinMsgStat = false;
+    }
+
     bot.sendMessage(chatIdBot, newMsg);
   }
 
@@ -364,7 +374,9 @@ bot.on("message", (msg) => {
       socket.onopen = function () {
         console.log("[open] Connection established");
         let msg_resp = JSON.stringify(messages);
-        socket.send(msg_resp);
+        if (socket !== null && socket.readyState === socket.OPEN) {
+          socket.send(msg_resp);
+        }
       };
 
       // getting msg
@@ -401,7 +413,9 @@ bot.on("message", (msg) => {
         },
       };
       let msg_new = JSON.stringify(message_new);
-      socket.send(msg_new);
+      if (socket !== null && socket.readyState === socket.OPEN) {
+        socket.send(msg_new);
+      }
     }
   }
 });
