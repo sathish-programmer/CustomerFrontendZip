@@ -6,7 +6,14 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 require("dotenv/config");
+// telegram part
+const TelegramBot = require("node-telegram-bot-api");
+const token = process.env.TELEGRAM_TOKEN;
+const bot = new TelegramBot(token, { polling: true });
 
+// var emoji = require("node-emoji");
+var testingTeleBot = false;
+/* end */
 var useNewMsg;
 let guid = null;
 let ak = null;
@@ -45,6 +52,8 @@ var retryInterval = 3000;
 var dontRetryConnection = false;
 var reconnectionTimeout;
 var previouslyConnected = false;
+
+var initTelegramMsg = true;
 
 var webOnHoldComfortGroups;
 var webOnHoldURLs;
@@ -241,6 +250,8 @@ function notifyNewParticipant(body) {
   clearTimeout(queueStatusDelay);
 }
 
+var chatIdBot;
+
 function notifyNewMessage(body) {
   "use strict";
   // parse the date first, then write the message out to the div
@@ -253,6 +264,9 @@ function notifyNewMessage(body) {
       " - Sent at " +
       date.toLocaleTimeString()
   );
+  if ((chatIdBot != "" || chatIdBot != undefined) && testingTeleBot) {
+    bot.sendMessage(chatIdBot, newMsg);
+  }
 
   return newMsg;
 }
@@ -306,6 +320,91 @@ socket.onclose = function (event) {
 socket.onerror = function (error) {
   console.log(`[error] ${error.message}`);
 };
+
+// telegram code starts
+bot.on("message", (msg) => {
+  chatIdBot = msg.chat.id;
+  testingTeleBot = true;
+
+  let get_name = msg.from.first_name;
+  let get_userName = msg.from.username;
+
+  var getEmail = "telegramUser@gmail.com";
+  var getName = get_userName;
+  if (initTelegramMsg) {
+    if (msg.text) {
+      socket = new WebSocket(avaya_chat_url);
+
+      var messages = {
+        apiVersion: "1.0",
+        type: "request",
+        body: {
+          method: "requestChat",
+          guid: guid,
+          authenticationKey: ak,
+          deviceType:
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36",
+          requestTranscript: false,
+          intrinsics: {
+            email: getEmail,
+            name: get_name,
+            country: "+91",
+            area: "",
+            phoneNumber: "9087678899",
+            skillset: "WC_Default_Skillset",
+            customFields: [
+              {
+                title: "test address",
+                value: "100, Test Street",
+              },
+            ],
+          },
+        },
+      };
+      socket.onopen = function () {
+        console.log("[open] Connection established");
+        let msg_resp = JSON.stringify(messages);
+        socket.send(msg_resp);
+      };
+
+      // getting msg
+      socket.onmessage = function (event) {
+        var msg = JSON.parse(event.data),
+          body = msg.body,
+          method = body.method;
+        // Handle the message according to the type and method.
+        if (msg.type === messageTypeNotification) {
+          handleNotification(msg);
+        } else if (msg.type === messageTypeError) {
+          console.log(
+            "An error occurred " + body.code + " (" + body.errorMessage + ")"
+          );
+        } else if (msg.type === messageTypeAck) {
+          // Nothing to do for acks
+        } else if (msg.type === messageTypeNewChatAck) {
+          guid = body.guid;
+          console.log("Chat request approved");
+        } else {
+          throw new TypeError("Unknown message type:\n" + msg);
+        }
+      };
+    }
+    initTelegramMsg = false;
+  } else {
+    if (msg.text) {
+      let message_new = {
+        apiVersion: "1.0",
+        type: "request",
+        body: {
+          method: "newMessage",
+          message: msg.text,
+        },
+      };
+      let msg_new = JSON.stringify(message_new);
+      socket.send(msg_new);
+    }
+  }
+});
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
