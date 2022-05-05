@@ -257,30 +257,6 @@ function notifyNewParticipant(body) {
 
 var chatIdBot;
 
-function notifyNewMessage(body) {
-  "use strict";
-  // parse the date first, then write the message out to the div
-  let date = new Date(body.timestamp);
-  var newMsg = body.message;
-  console.log(
-    body.displayName +
-      ": " +
-      body.message +
-      " - Sent at " +
-      date.toLocaleTimeString()
-  );
-  if ((chatIdBot != "" || chatIdBot != undefined) && testingTeleBot) {
-    if (anAgentJoinMsgStat) {
-      bot.sendMessage(chatIdBot, anAgentJoinMsg);
-      anAgentJoinMsgStat = false;
-    }
-
-    bot.sendMessage(chatIdBot, newMsg);
-  }
-
-  return newMsg;
-}
-
 function notifyRequestChat(body) {
   "use strict";
   guid = body.guid;
@@ -334,6 +310,7 @@ socket.onerror = function (error) {
 // telegram code starts
 bot.on("message", (msg) => {
   chatIdBot = msg.chat.id;
+  console.log("this is user id " + chatIdBot);
   testingTeleBot = true;
 
   let get_name = msg.from.first_name;
@@ -350,8 +327,8 @@ bot.on("message", (msg) => {
         type: "request",
         body: {
           method: "requestChat",
-          guid: guid,
-          authenticationKey: ak,
+          guid: null,
+          authenticationKey: null,
           deviceType:
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36",
           requestTranscript: false,
@@ -381,6 +358,7 @@ bot.on("message", (msg) => {
 
       // getting msg
       socket.onmessage = function (event) {
+        console.log(event.data);
         var msg = JSON.parse(event.data),
           body = msg.body,
           method = body.method;
@@ -419,6 +397,30 @@ bot.on("message", (msg) => {
     }
   }
 });
+
+function notifyNewMessage(body) {
+  "use strict";
+  // parse the date first, then write the message out to the div
+  let date = new Date(body.timestamp);
+  var newMsg = body.message;
+  console.log(
+    body.displayName +
+      ": " +
+      body.message +
+      " - Sent at " +
+      date.toLocaleTimeString()
+  );
+  if ((chatIdBot != "" || chatIdBot != undefined) && testingTeleBot) {
+    if (anAgentJoinMsgStat) {
+      bot.sendMessage(chatIdBot, anAgentJoinMsg);
+      anAgentJoinMsgStat = false;
+    }
+
+    bot.sendMessage(chatIdBot, newMsg);
+  }
+
+  return newMsg;
+}
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);

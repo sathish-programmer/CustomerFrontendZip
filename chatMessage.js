@@ -8,8 +8,8 @@ const port = process.env.PORT || 3000;
 require("dotenv/config");
 
 var useNewMsg;
-let guid = null;
-let ak = null;
+var guid = null;
+var ak = null;
 let g_user;
 
 //queue Status delay timeout
@@ -66,8 +66,8 @@ app.get("/api/initChat", function (req, res) {
       type: "request",
       body: {
         method: "requestChat",
-        guid: guid,
-        authenticationKey: ak,
+        guid: null,
+        authenticationKey: null,
         deviceType:
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36",
         requestTranscript: false,
@@ -90,30 +90,13 @@ app.get("/api/initChat", function (req, res) {
     socket.onopen = function () {
       console.log("[open] Connection established");
       let msg_resp = JSON.stringify(messages);
-      socket.send(msg_resp);
+      if (socket !== null && socket.readyState === socket.OPEN) {
+        socket.send(msg_resp);
+      }
     };
 
     // getting msg
-    socket.onmessage = function (event) {
-      var msg = JSON.parse(event.data),
-        body = msg.body,
-        method = body.method;
-      // Handle the message according to the type and method.
-      if (msg.type === messageTypeNotification) {
-        handleNotification(msg);
-      } else if (msg.type === messageTypeError) {
-        console.log(
-          "An error occurred " + body.code + " (" + body.errorMessage + ")"
-        );
-      } else if (msg.type === messageTypeAck) {
-        // Nothing to do for acks
-      } else if (msg.type === messageTypeNewChatAck) {
-        guid = body.guid;
-        console.log("Chat request approved");
-      } else {
-        throw new TypeError("Unknown message type:\n" + msg);
-      }
-    };
+    socket.onmessage = handleMessage;
 
     let respMessage = JSON.stringify({
       Name: getName,
@@ -140,6 +123,8 @@ app.get("/api/initChat", function (req, res) {
 app.get("/api/sendNewMsg", async function (req, res) {
   try {
     let getMsg = req.query.msg;
+    let getGUID = req.query.guid;
+    let getAuthKey = req.query.authKey;
     let currTime = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -152,10 +137,14 @@ app.get("/api/sendNewMsg", async function (req, res) {
         body: {
           method: "newMessage",
           message: getMsg,
+          // guid: null,
+          // authenticationKey: null,
         },
       };
       let msg_new = JSON.stringify(message_new);
-      socket.send(msg_new);
+      if (socket !== null && socket.readyState === socket.OPEN) {
+        socket.send(msg_new);
+      }
       console.log("User: " + getMsg + " - Sent at " + currTime);
     }
     let respMessage = JSON.stringify({
@@ -166,6 +155,30 @@ app.get("/api/sendNewMsg", async function (req, res) {
     return res.json({ success: false, message: err });
   }
 });
+
+function handleMessage(event) {
+  // console.log("Event details ", event);
+  console.log(event.data);
+  var msg = JSON.parse(event.data),
+    body = msg.body,
+    method = body.method;
+  // Handle the message according to the type and method.
+  if (msg.type === messageTypeNotification) {
+    handleNotification(msg);
+  } else if (msg.type === messageTypeError) {
+    console.log(
+      "An error occurred " + body.code + " (" + body.errorMessage + ")"
+    );
+  } else if (msg.type === messageTypeAck) {
+    // Nothing to do for acks
+  } else if (msg.type === messageTypeNewChatAck) {
+    guid = body.guid;
+    console.log("Chat request approved");
+    resetConnectionRetrys();
+  } else {
+    throw new TypeError("Unknown message type:\n" + msg);
+  }
+}
 
 function handleNotification(message) {
   // NOSONAR Reason: too complex, but cannot be reduced further
@@ -196,7 +209,7 @@ function handleNotification(message) {
     throw new TypeError("Received notification with unknown method: " + method);
   }
 }
-console.log(useNewMsg);
+// console.log(useNewMsg);
 function notifyQueueStatus(body) {
   "use strict";
   var position = body.positionInQueue,
@@ -260,6 +273,7 @@ function notifyNewMessage(body) {
 function notifyRequestChat(body) {
   "use strict";
   guid = body.guid;
+  console.log("Check guid " + guid);
   g_user = body.intrinsics.name;
   ak = body.authenticationKey;
   console.log("Login request received and approved");
