@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.avaya.mch.customer</groupId>
+		<artifactId>CustomerController</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.avaya.mch.customer.web</groupId>
+	<artifactId>CustomerFrontend</artifactId>
+	<packaging>war</packaging>
+	<name>CustomerFrontend</name>
+
+	<!-- Set Sonar to analyse JavaScript, but only the concatenated file avayaChat.js -->
+	<properties>
+		<sonar.login>87f1229a07458dc6928cd3fe4d55227bd4403e23</sonar.login>
+		<sonar.language>js</sonar.language>
+		<sonar.sources>src/dist/dist/js/avayaChat.js</sonar.sources>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.sonar-plugins.javascript</groupId>
+			<artifactId>sonar-javascript-plugin</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<!-- JS files aren't supported by maven out-of-the-box -->
+				<directory>src/main/webapp/js</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/target/dist/js</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<!-- Assemble static content -->
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/static.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+				    <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+<!-- 				    <warSourceExcludes>test/**/*, main/assembly/*, main/.yo-rc.json</warSourceExcludes> -->
+				    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<!-- actually run Sonar -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>LATEST</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

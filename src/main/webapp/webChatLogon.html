@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<!-- 
+    webChatLogon.html
+    Copyright 2015 Avaya Inc. All Rights Reserved.
+
+    Usage of this source is bound to the terms described in
+    licences/License.txt
+
+    Avaya - Confidential & Proprietary. Use pursuant to your signed agreement or
+    Avaya Policy
+ -->
+
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Sample Customer Web Chat Logon</title>
+
+<!-- build:js js/avayaChat.js -->
+<script src="js/global.js"></script>
+<script src="js/webChatLogon.js"></script>
+<script src="js/checkQueue.js"></script>
+<script src="js/callback.js"></script>
+<!-- endbuild -->
+
+<script src="js/dialcodes.js"></script>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+<h1>Chat logon</h1>
+
+<body onload="setSkillsets()">
+    <h1>Please fill all the fields</h1>
+    <div id="chatForm">
+            <table class="formTable">
+                <tr>
+                    <td class="formLabel">Name</td>
+                    <td class="formField"><input type="text" id="user-chat"></td>
+                    <td class="formLabel">Country, Area Code and Phone</td>
+                    <td><select id="country-chat" class="formField"></select> <input
+                        type="text" id="area-chat" class="areaInput"> <input
+                        type="text" id="phone-chat" class="phoneInput"></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel">E-mail</td>
+                    <td class="formField"><input type="text" id="email-chat"></td>
+                    <td class="formLabel">Address</td>
+                    <td class="formField"><input type="text" id="address-chat"></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel">Skillset</td>
+                    <td class="formField"><select id="skillset-chat">
+                            <!-- No options yet - these are added in on page load -->
+                    </select></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel center" colspan="2"><input
+                        type="checkbox" id="transcript-chat"> Email the chat
+                        transcript to me</td>
+                    <td class="formLabel"></td>
+                    <td class="formField center">
+                        <button id="openbutton-chat" onclick="gatherDetails()"
+                            class="button">Chat Now</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+</body>
+</html>

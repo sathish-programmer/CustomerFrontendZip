@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly>
+	<id>static</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/webapp</directory>
+			<includes>
+				<include>**/*.html</include>
+				<include>**/*.htm</include>
+				<include>**/*.jpg</include>
+				<include>**/*.gif</include>
+				<include>**/*.css</include>
+				<include>**/*.js</include>
+				<include>**/*.txt</include>
+				
+				<!-- required for Tomcat deployments -->
+				<include>/WEB-INF/web.xml</include>
+			</includes>
+			<outputDirectory>src/main/webapp</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/dist/dist</directory>
+			<includes>
+				<include>**/*.html</include>
+				<include>**/*.htm</include>
+				<include>**/*.jpg</include>
+				<include>**/*.gif</include>
+				<include>**/*.css</include>
+				<include>**/*.js</include>
+				<include>**/*.txt</include>
+			</includes>
+			<outputDirectory>src/dist/dist</outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly>

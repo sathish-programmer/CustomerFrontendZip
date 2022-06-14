@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<!-- 
+    home.html
+    Copyright 2015 Avaya Inc. All Rights Reserved.
+
+    Usage of this source is bound to the terms described in
+    licences/License.txt
+
+    Avaya - Confidential & Proprietary. Use pursuant to your signed agreement or
+    Avaya Policy
+ -->
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<link rel="stylesheet" href="style.min.css">
+
+<link rel="stylesheet" href="jquery-ui-1.11.4.custom/jquery-ui.min.css">
+<script src="jquery-1.11.3/jquery.min.js" type="text/javascript"></script>
+<script src="jquery-ui-1.11.4.custom/jquery-ui.min.js"
+    type="text/javascript"></script>
+<script src="jquery-plugins/jquery.tabSlideOut.v1.3.js"></script>
+
+<script src="js/links.js"></script>
+<script src="js/avayaChat.js"></script>
+<script src="js/dialcodes.js"></script>
+
+<script>
+    window.onload = function(event) {
+        startQueueCheck();
+        showCallbackDateForm();
+    };
+</script>
+
+</head>
+
+<body>
+    <input type="hidden" name="skillSet" id="pageSkillSet" value="" />
+
+    <!-- -- HEADER -- -->
+    <div class="header">
+        <!-- -- MENU -- -->
+        <div class="menu">
+            <a href="#">Solutions</a> &nbsp; | &nbsp; <a href="#">Products</a>
+            &nbsp; | &nbsp; <a href="#">Services</a> &nbsp; | &nbsp; <a href="#">Partners</a>
+            &nbsp; | &nbsp; <a href="#">Support</a> &nbsp; | &nbsp; <a href="#"
+                id="liveChatLink">Live Chat</a> &nbsp; | &nbsp; <a href="#"
+                id="callbackLink">Call Back</a>
+        </div>
+    </div>
+
+    <!-- -- MAIN -- -->
+    <div class="main">
+        <div class="title"></div>
+        <br> <br> <br>
+
+        <div class="panel">
+            <a href="http://www.avaya.com/usa/solutions/#Customer Engagement">
+                <h1>Customer Engagement Solutions</h1>
+                <h2>Converse across channels. Increase revenue.</h2>
+                <p>LEARN MORE</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- -- FOOTER -- -->
+    <div class="footer">
+        <!-- -- SOCIAL MEDIA LINKS -- -->
+        <div class="footerSocialMedia">
+            <a href="#"><img src="images/twitter.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/facebook.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/youtube.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/linkedin.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/avaya.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/google.png"></a> &nbsp;&nbsp;<a
+                href="#"><img src="images/pinterest.png"></a>
+        </div>
+
+        <!-- -- COLUMN LINKS -- -->
+        <div class="footerColumn">
+            INFORMATION FOR
+            <div class="footerLinks">
+                <a href="#">Industries</a> <br> <a href="#">Small Business</a>
+                <br> <a href="#">Federal Government</a> <br> <a href="#">Developers</a>
+                <br> <a href="#">Partners</a> <br> <a href="#">Consultants</a>
+            </div>
+        </div>
+        <div class="footerColumn">
+            TOP LINKS
+            <div class="footerLinks">
+                <a href="#">Products A-Z</a> <br> <a href="#">Support</a> <br>
+                <a href="#">Solution Finder</a> <br> <a href="#">Phones</a>
+            </div>
+        </div>
+        <div class="footerColumn">
+            READY TO BUY?
+            <div class="footerLinks">
+                <a href="#">How to Buy</a> <br> <a href="#">Find an Avaya
+                    Partner</a> <br> <a href="#">Promotions & Programs</a> <br> <a
+                    href="#">Avaya Product Calculator</a> <br>1-866-GO-AVAYA <br>prompt
+
+            </div>
+        </div>
+        <div class="footerColumn">
+            ABOUT AVAYA
+            <div class="footerLinks">
+                <a href="#">Newsroom</a> <br> <a href="#">Company Overview</a>
+                <br> <a href="#">Investor Relations</a> <br> <a href="#">Innovations</a>
+                <br> <a href="#">Customer Success Stories</a> <br> <a
+                    href="#">Avaya Perspectives</a> <br> <a href="#">Industry
+                    Recognition</a>
+            </div>
+        </div>
+        <div class="footerColumn">
+            FOLLOW US
+            <div class="footerLinks">
+                <a href="#">Avaya Community</a> <br> <a href="#">Blogs</a> <br>
+                <a href="#">Subscribe to monthly email</a>
+            </div>
+        </div>
+
+        <!-- -- GENERAL LINKS -- -->
+        <div class="footerGeneral">
+            <div class="footerGeneralLeft">
+                <a href="#">About Avaya</a> &nbsp;&nbsp;&nbsp;<a href="#">Contacts</a>
+                &nbsp;&nbsp;&nbsp;<a href="#">Careers</a> &nbsp;&nbsp;&nbsp;<a
+                    href="#">Resource Library</a> &nbsp;&nbsp;&nbsp;<a href="#">Site
+                    Map</a>
+            </div>
+            <div class="footerGeneralRight">
+                <a href="">Terms of User</a> &nbsp;&nbsp;&nbsp;<a href="#">Privacy
+                    Statement</a> &nbsp;&nbsp;&nbsp;© 2009-2012 Avaya Inc.
+            </div>
+        </div>
+    </div>
+
+    <!-- -- CALL BACK PANEL -- -->
+    <div id="callbackPanel" class="slide-out-div-callback">
+        <a class="callbackHandle" href="#"></a>
+        <div class="sectionBorder">
+            <span class="bigtext">Avaya </span> <span class="smalltext">|
+                Call Back</span>
+        </div>
+
+        <!-- -- CALL BACK FORM -- -->
+        <div id="callbackForm">
+            <form>
+                <table class="formTable">
+                    <tr>
+                        <td class="formLabel">Name</td>
+                        <td class="formField"><input type="text" id="user-callback"></td>
+                        <td class="formLabel">Area Code and Phone</td>
+                        <td><input type="text" id="area-callback" class="areaInput">
+                            <input type="text" id="phone-callback" class="phoneInput"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="formLabel">E-mail</td>
+                        <td class="formField"><input type="text" id="email-callback"></td>
+                        <td class="formLabel">Country</td>
+                        <td class="formField"><select id="country-callback">
+                                <!-- options are added automatically -->
+                        </select></td>
+
+                    </tr>
+
+                    <tr>
+                        <td class="formLabel">Preferred Time</td>
+                        <td class="formField"><select id="time-callback">
+                        </select></td>
+                        <td class="formLabel">Preferred Date</td>
+                        <td class="formField"><input type="text" id="date-callback"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="formLabel">Skillset</td>
+                        <td class="formField"><select id="skillset-callback">
+                                <!-- These options will be added on page load -->
+
+                        </select></td>
+                        <td class="formLabel"></td>
+                        <td class="formField center">
+                            <button type="button" id="button-callback" class="button">Call
+                                me at this time</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+        <div class="poweredBy">Powered by Avaya Aura™ Contact Center</div>
+    </div>
+
+    <!-- -- CHAT PANEL -- -->
+    <div id="chatPanel" class="slide-out-div-chat">
+        <a class="chatHandle" href="#"></a>
+        <div class="sectionBorder">
+            <span class="bigtext">Avaya </span> <span class="smalltext">|
+                Live Chat</span>
+        </div>
+
+        <!-- -- CHAT FORM -- -->
+        <div id="chatForm">
+            <table class="formTable">
+                <tr>
+                    <td class="formLabel">Name</td>
+                    <td class="formField"><input type="text" id="user-chat"></td>
+                    <td class="formLabel">Country, Area Code and Phone</td>
+                    <td><select id="country-chat" class="formField"></select> <input
+                        type="text" id="area-chat" class="areaInput"> <input
+                        type="text" id="phone-chat" class="phoneInput"></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel">E-mail</td>
+                    <td class="formField"><input type="text" id="email-chat"></td>
+                    <td class="formLabel">Address</td>
+                    <td class="formField"><input type="text" id="address-chat"></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel">Skillset</td>
+                    <td class="formField"><select id="skillset-chat">
+                            <!-- No options yet - these are added in on page load -->
+                    </select></td>
+                </tr>
+
+                <tr>
+                    <td class="formLabel center" colspan="2"><input
+                        type="checkbox" id="transcript-chat"> Email the chat
+                        transcript to me</td>
+                    <td class="formLabel"></td>
+                    <td class="formField center">
+                        <button id="openbutton-chat" onclick="gatherDetails()"
+                            class="button">Chat Now</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- -- CHAT INTERFACE -- -->
+        <div id="chatInterface">
+
+            <!-- messages -->
+            <div id="messages"></div>
+
+            <!-- participants -->
+            <div id="usersDiv">
+                <div id="participants">
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                </div>
+            </div>
+
+            <div id="controls">
+                <input type="text" id="outmessage" class="chatField">
+                <button type="button" id="sendbutton-chat"
+                    onclick="sendChatMessage()" class="button">Send</button>
+                <button type="button" id="closebutton-chat" onclick="quitChat()"
+                    class="button">Close</button>
+
+                <div id="pagePushDiv" class="fold-out-pagepush">
+                    <input type="url" class="urlField" id="urlInput"
+                        placeholder="http://www.avaya.com">
+                    <button type="button" id="sendurl-chat"
+                        onclick="sendPagePushRequest()" class="button">Send Link</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="poweredBy">Powered by Avaya Aura™ Contact Center</div>
+    </div>
+
+    <div id="callbackDialog" title="Call Back Dialog"></div>
+
+    <div id="chatDialog" title="Chat Dialog"></div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.slide-out-div-callback').tabSlideOut({
+                tabHandle : '.callbackHandle', // class of the element that will become your tab
+                pathToTabImage : 'images/CallBack2.jpg', // path to the image for the tab (Optionally can be set using css)
+                imageHeight : '105px', // height of tab image (Optionally can be set using css)
+                imageWidth : '25px', // width of tab image (Optionally can be set using css)
+                tabLocation : 'right', // side of screen where tab lives, top, right, bottom, or left
+                speed : 300, // speed of animation
+                action : 'click', // options: 'click' or 'hover', action to trigger animation
+                topPos : '67px', // position from the top (use if tabLocation is left or right)
+                leftPos : '0px', // position from left (use if tabLocation is bottom or top)
+                fixedPosition : false
+            // options: true makes it stick(fixed position) on scroll
+            });
+        });
+
+        $(function() {
+            // Set jQuery plugin tab
+            $('.slide-out-div-chat').tabSlideOut({
+                tabHandle : '.chatHandle', // class of the element that will become your tab
+                pathToTabImage : 'images/LiveChat2.jpg', // path to the image for the tab (Optionally can be set using css)
+                imageHeight : '111px', // height of tab image (Optionally can be set using css)
+                imageWidth : '25px', // width of tab image (Optionally can be set using css)
+                tabLocation : 'right', // side of screen where tab lives, top, right, bottom, or left
+                speed : 300, // speed of animation
+                action : 'click', // options: 'click' or 'hover', action to trigger animation
+                topPos : '254px', // position from the top (use if tabLocation is left or right)
+                leftPos : '0px', // position from left (use if tabLocation is bottom or top)
+                fixedPosition : false
+            // options: true makes it stick(fixed position) on scroll
+            });
+        });
+        
+        function quitChat(){ // called when close button is clicked 
+            switchFormToLogon(); // readjusts the chatPanel div back to 165 pixels
+            $('#chatPanel' ).hide("slide", { direction: "right" }, 500); // sliding left to right animation duration of 0.5 seconds
+            setTimeout(function(){ // wait 0.5 seconds function
+              location.reload(); // refresh the page
+            }, 500);
+        }
+        
+        // Set jQuery UI dialog
+        $('#liveChatLink').click(function(event) {
+            $('#chatDialog').dialog();
+            event.preventDefault();
+        });
+
+        $('#callbackLink').click(function(event) {
+            $('#callbackDialog').dialog();
+            event.preventDefault();
+        });
+
+        // Set jQuery UI button
+        $('.button').button();
+
+        $('#date-callback').datepicker();
+        $('#date-callback').datepicker('option', 'dateFormat', 'dd/mm/yy');
+
+        // fold out the div for page pushes
+        // $('#fold-out-pagepush').toggle('fold');
+    </script>
+
+</body>
+</html>

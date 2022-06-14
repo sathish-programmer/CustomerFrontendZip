@@ -1,0 +1,416 @@
+@CHARSET "ISO-8859-1";
+
+/*
+/////////////////////////////////////////////////////////////////////////////
+//
+// style.css
+//
+// Copyright 2008-2015 Avaya Inc. All Rights Reserved.
+//
+// Usage of this source is bound to the terms described
+// in <INSERT_LINK_TO_LICENSE_TEXT>
+//
+// Avaya - Confidential & Proprietary. Use pursuant to your signed agreement
+// or Avaya Policy
+//
+/////////////////////////////////////////////////////////////////////////////
+*/
+
+/*
+ *	A default stylesheet for the user to extend.
+ */
+html, body {
+	margin: 0px;
+	padding: 0px;
+	font-family: Arial, san-serif;
+	font-size: 12px;
+	background-color: rgb(74, 74, 74);
+}
+
+/*
+ *	Paragraphs in general scale to match their parent div
+ */
+p {
+	word-wrap: break-word;
+	width: 100%;
+}
+
+/*
+ *	The clear uses the clear attribute to prevent divs from being on
+ *	either side of it, and should come before the footer div to keep
+ *	the footer at the bottom of the page.
+ */
+.clear {
+	width: 100%;
+	clear: both;
+}
+
+.button {
+}
+
+/*
+ *	HEADER
+ *	****************************************************************
+ */
+.header {
+	display: block;
+	width: 100%;
+	height: 64px;
+	background-color: rgb(209, 8, 18);
+	background-image: url("images/AvayaLogoCustom2.jpg");
+	background-repeat: no-repeat;
+}
+.header div {
+	display: inline-block;
+}
+
+/*
+ *	MENU
+ *	****************************************************************
+ */
+.menu {
+	display: inline;
+	margin-left: 200px;
+	margin-top: 32px;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+}
+.menu a {
+	color: white;
+	text-decoration: none;
+}
+.menu a:hover {
+	color: black;
+}
+
+
+/*
+ *	MAIN
+ *	****************************************************************
+ */
+.main {
+	display: block;
+	width: 100%;
+	height: 458px;
+	background-color: white;
+	background-image: url("images/customerengagement_878x458_white.jpg");
+	background-repeat: no-repeat;
+}
+
+.title {
+	padding-top: 20px;
+	padding-left: 20px;
+	font-size: 21px;
+	color: white;
+}
+
+.panel {
+	position: relative;
+	top: 200px;
+	width: 400px;
+	margin-top: 20px;
+	margin-left: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-image: url("images/ambient-red.jpg");
+	background-repeat: no-repeat;
+}
+.panel a {
+	color: white;
+	text-decoration: none;
+}
+
+
+/*
+ *	FOOTER
+ *	****************************************************************
+ */
+.footer{
+	padding: 0px;
+	background-color: rgb(105, 105, 105);
+	color: white;
+	text-align: center;
+}
+.footerSocialMedia {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-right: 35px;
+	padding-left: 10px;
+	background-color: rgb(238, 238, 238);
+	text-align: right;
+	vertical-align: middle;
+}
+.footerColumn {
+	display: inline-block;
+	width: 160px;
+	padding-top: 12px;
+	padding-right: 2px;
+	padding-bottom: 18px;
+	padding-left: 2px;
+	text-align: left;
+	vertical-align: top;
+	color: rgb(190, 190, 190);
+}
+.footerLinks {
+	padding-top: 10px;
+}
+.footerLinks a {
+	padding: 0px 0px 0px 0px;
+	color: white;
+	text-decoration: none;
+}
+.footerLinks a:hover {
+	color: rgb(190, 190, 190);
+}
+.footerGeneral {
+	background-color: rgb(74, 74, 74);
+}
+.footerGeneralLeft {
+	display: inline;
+	width: 50%;
+	padding: 4px 4px 14px 14px;
+	text-align: left;
+}
+.footerGeneralRight {
+	display: inline-block;
+	width: 50%;
+	padding: 4px 14px 14px 4px;
+	text-align: right;
+}
+.footerGeneral a {
+	color: white;
+	font-size: 11px;
+	text-decoration: none;
+}
+.footerGeneral a:hover {
+	color: rgb(190, 190, 190);
+}
+
+
+/*
+ *	CHAT
+ *	****************************************************************
+ */
+.slide-out-div-chat {
+	padding-top: 10px;
+	padding-bottom: 0px;
+	padding-right: 20px;
+	padding-left: 20px;
+	width: 520px;
+	background: #4a4a4a;
+	color: white;
+}
+
+#chatForm {
+	display: block;
+	margin-top: 10px;
+}
+#chatInterface {
+	display: none;
+}
+/*
+ *	The messages in the chat are posted inside this div.
+ *	The overflow setting, when combined with a maximum height,
+ *	gives the div a scrollbar.
+ */
+#messages {
+	border-bottom: 1px solid #cccccc;
+	padding-left: 0px;
+	padding-right: 5px;
+	padding-top: 0px;
+	padding-bottom: 5px;
+	height: 230px;
+	word-wrap: break-word;
+	overflow-y: scroll;
+}
+#messages a {
+	color: white;
+}
+#participants {
+	padding-top: 4px;
+}
+#participants div {
+	display: inline-block;
+	width: 145px;
+	border: 1px dotted #cccccc;
+}
+#controls {
+	padding-top: 7px;
+	
+}
+#usersDiv {
+	height: 45px;
+}
+
+.bigtext {
+	font-size: 19px;
+}
+.smalltext {
+	font-size: 13px;
+}
+
+.sectionBorder {
+	display: block;
+	border-bottom: 1px solid #cccccc;
+	padding-bottom: 5px;
+}
+
+.formTable {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	padding: 0px;
+}
+.formTable td {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+.formLabel {
+	padding: 0px;
+	font-size: 11px;
+	color: white;
+}
+.formField {
+	width: 170px;
+	padding-bottom: 2px;
+	text-align: left;
+}
+.formField input,select {
+	width: 160px;
+	border: 1px solid #cccccc;
+	padding: 3px;
+	background-color: #4a4a4a;
+	font-size: 12px;
+	color: white;
+}
+.formField select {
+	width: 168px;
+}
+
+.formCheckbox {
+	padding-right: 172px;
+	text-align: right;
+}
+
+#openbutton-chat {
+	width: 160px;
+}
+
+.chatField {
+	width: 305px;
+	border: 1px solid #cccccc;
+	padding: 3px;
+	background-color: #4a4a4a;
+	font-size: 12px;
+	color: white;
+}
+
+.poweredBy  {
+	display: block;
+	border-top: 1px solid #cccccc;
+	padding-top: 10px;
+	text-align: right;
+	position: relative;
+	left: -20px;
+	width: 520px;
+	padding-right: 40px;
+	font-size: 10px;
+    background: #4a4a4a;
+    
+}
+
+/*
+ *	The WebOnHold URLS are posted inside this div.
+ */
+#webOnHoldDiv {
+	float: right;
+	width: 50%;
+	padding-top: 20px;
+}
+
+/*
+ *	Sent chat messages are inside a red paragraph
+ */
+p.sent {
+	color: rgb(255,51,0);
+}
+
+/*
+ *	Received chat messages are inside a blue paragraph,
+ *	with italics to help distinguish them from sent paragraphs
+ */
+p.response {
+	color: rgb(0,204,255);
+	font-style: italic;
+}
+
+
+/*
+ *	CALL BACK
+ *	****************************************************************
+ */
+.slide-out-div-callback {
+	padding-top: 10px;
+	padding-bottom: 0px;
+	padding-right: 20px;
+	padding-left: 20px;
+	width: 520px;
+	background: #4a4a4a;
+	color: white;
+}
+
+#callbackForm {
+	margin-top: 7px;
+	padding-bottom: 2px;
+}
+#displayDay {
+	border: 1px solid yellow;
+	color: white;
+}
+
+#button-callback {
+	width: 160px;
+}
+
+.center {
+	text-align: center;
+}
+
+.user {
+	display: inline;
+	width: 170px;
+}
+
+.hidden {
+	display: none;
+}
+
+.typing {
+	background: yellow;
+	color: black;
+}
+
+.urlField:invalid {
+	background-color:white;
+	color: #4a4a4a;
+}
+
+.urlField:valid {
+	background-color: #4a4a4a;
+	color:white;
+}
+
+.areaInput {
+	width: 50px;
+	background-color: #4A4A4A;
+	color:white;
+}
+
+.phoneInput {
+	width: 100px;
+	background-color: #4A4A4A;
+	color:white;
+}

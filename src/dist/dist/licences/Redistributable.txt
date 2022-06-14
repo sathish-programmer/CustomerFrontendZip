@@ -1,0 +1,42 @@
+Grunt distribution folder (if present)
+src\dist\dist\jquery-1.11.3\jquery.min.js
+src\dist\dist\jquery-plugins\jquery.tabSlideOut.v1.3.js
+src\dist\dist\jquery-ui-1.11.4.custom\jquery-ui.min.js
+src\dist\dist\js\avayaChat.js
+src\dist\dist\js\avayaChat.min.js
+src\dist\dist\js\dialcodes.js
+src\dist\dist\js\links.js
+src\main\webapp\home.html
+src\main\webapp\home.min.html
+src\main\webapp\WebChat.html
+src\main\webapp\WebChat.min.html
+src\main\webapp\webChatLogon.html
+src\main\webapp\webChatLogon.min.html
+
+Main Webapp folder
+src\main\webapp\jquery-1.11.3\jquery.min.js
+src\main\webapp\jquery-plugins\jquery.tabSlideOut.v1.3.js
+src\main\webapp\jquery-ui-1.11.4.custom\jquery-ui.min.js
+src\main\webapp\js\callback.js
+src\main\webapp\js\checkQueue.js
+src\main\webapp\js\dialcodes.js
+src\main\webapp\js\global.js
+src\main\webapp\js\links.js
+src\main\webapp\js\webChat.js
+src\main\webapp\js\webChatConfig.js
+src\main\webapp\js\webChatLogon.js
+src\main\webapp\js\webChatSocket.js
+src\main\webapp\WEB-INF\web.xml
+src\main\webapp\style.css
+src\main\webapp\home.html
+src\main\webapp\WebChat.html
+src\main\webapp\webChatLogon.html
+
+Mocha Unit Test folder
+src\test\spec\fullTest.js
+src\test\spec\MockRestCall.js
+src\test\spec\MockWebSocketClient.js
+src\test\spec\MockWebSocketServer.js
+src\test\spec\testCallback.js
+src\test\spec\testUtils.js
+

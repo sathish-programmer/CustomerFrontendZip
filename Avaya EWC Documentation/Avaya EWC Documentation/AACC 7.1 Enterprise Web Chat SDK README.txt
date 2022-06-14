@@ -1,0 +1,125 @@
+
+Avaya Enterprise Web Chat 7.1 Software Development Kit Readme
+Enterprise Web Chat is offered as a licensed alternative to the traditional AACC web chat providing a secure and high capacity chat solution. Enterprise Web Chat can only be installed as part of standalone voice and multimedia system. Enterprise Web Chat is rich in agent, supervisor and customer features, provided via new customer facing and agent facing set of rest API’s and reference implementations.
+
+The EWC Software Development Kit (SDK) consists of the following elements:
+1. EWC Documentation in PDF format with readme file
+2. EWC Custom Desktop client
+3. Reference web user interface
+4. Customer Filter Messages
+
+New in Contact Center 7.1: 
+=================================================================
+• ACCS Support for Enterprise Web Chat
+• Enterprise Web Chat support in co-residence environment
+
+New in Contact Center 7.0: AACC Support for Enterprise Web Chat
+=================================================================
+• Scalable and high capacity multimedia chat solution (refer to the Avaya Aura Contact Center Specification and Overview document for supported capacity rates) 
+• New Agent facing API and Agent SDK to customize agent & supervisor experience 
+• New customer facing API and reference Customer UI to customize customer experience 
+• Builds on the principles laid down by earlier releases of AACC – uses existing administration, reporting and routing infrastructure of AACC 
+• Feature rich API providing in-chat behaviours, wait treatments, transcript management, and supervisor observe & barge-in etc. 
+• Mobile Ready – provides re-connect capabilities in the event of temporary network loss Supported on AACC 7.0 Avaya Aura platforms only 
+• Supports multiplicity of chat sessions. 
+• EWC is supported on Avaya Agent Desktop as of 7.0.1 release
+
+The solution uses an embedded XMPP server to host the conversations within AACC. In EWC, customer and agent controllers are used to request a chat and to pass messages into the desired chat room. Transcripts are kept for each chat and persisted in the AACC database allowing for each chat to be logged for further analysis. A notification for which user is typing is also included, as well as both comfort and on-hold messages for the customer when the agent is slow to react to new chats. In addition, supervisors are granted the ability to observe other agents and even barge in when they are not performing adequately. These actions are guided by intrinsic data such as number of messages sent, time since last message, number of unanswered messages etc. EWC contacts can be monitored via AACC Real time and historical reporting. 
+
+
+
+Sample EWC Custom Desktop client
+=================================================================
+The reference Custom Desktop application is provided in zip file format and is available as part of the Enterprise Web Chat SDK software. Ensure that you have extracted the contents of the zip file to your system, e.g. C:\Avaya EWC Custom Desktop. Once extracted, navigate to the ‘bin’ directory. This folder contains all the files necessary to run the Custom Desktop application. 
+Before running the Custom Desktop application for the first time, you must edit the AppSettings.xml file, this file is located in the previously extracted ‘bin’ directory. The AppSettings.xml file contains a number of server, user and security settings that must be defined prior to logging into AACC. Note: This task assumes a non-High Availability deployment. If you plan to use the Custom Desktop in a HA solution, please refer to the section ‘Configuring Custom Desktop Application settings for High Availability’. Once this task is complete, it will be possible to launch the Custom Desktop by running the CustomDesktop.exe application. 
+Procedure 
+1. In the extracted ‘bin’ folder, edit the AppSettings.xml and set the following values: 
+2. Set the hostname or IP address of the default CCT server in the DefaultCCTServer entry. 
+3. Set the CCT username of the agent or supervisor in the DefaultCCTUserID entry. This is the account that will be used to login to AACC when running Custom Desktop. 
+4. Set the domain of the configured CCT user account in the DefaultCCTUserDomain entry. 
+5. Set the hostname or IP address of the default Multimedia server in the DefaultMMServer entry. 
+6. Set the URL of the WebSocket in the WebSocketURL entry. 
+Security on: wss://(Multimedia Server IP):8445/AgentControllerWeb/chat 
+Security off: ws://(Multimedia Server IP):8081/AgentControllerWeb/chat 
+7. Set a value of false in the HAEnabled entry for solutions that are not using High Availability. 
+8. Set whether the Custom Desktop should automatically reconnect if disconnected unexpectedly. This is set in the AutoReconnect entry. This setting can either be true or false. 
+9. Set whether security is switched on for an email server (if applicable). This is set in the IsSecure entry. 
+This should be set to true if the security settings are activated on the CCMM server (i.e. set to ‘on’ in the AACC Certificate Manager application). Otherwise, it can be set to false. 
+If this is not set correctly, agents will not be alerted about incoming emails. 
+10. Set the location where email attachments (if applicable) will be downloaded to in the DownloadAttachmentsLocation entry. 
+11. All other configuration settings can be left unchanged. 
+12. Save changes to the AppSettings.xml file. 
+
+
+
+
+Sample Reference web user interface
+=================================================================
+A Reference Web User Interface is provided in zip file format and is available as part of the Enterprise Web Chat SDK software. This sample customer web site represents the customer facing interface to request and engage in EWC chat conversations with EWC enabled AACC agents. 
+Ensure that you have extracted the contents of the zip file to your system, e.g. C:\CustomerFrontendZip. Once extracted, note the following folder structure: 
+‘src’ folder: This folder contains the complete source of the Reference Web User Interface 
+‘src\dist\dist’ folder: This folder contains a distribution version of the application that can be deployed on your web server. Note: This should not be deployed on the AACC server. 
+1. Navigate to the webapps directory of your Tomcat installation (e.g C:/servers/apachetomcat/webapps). 
+2. Create a sub-directory for the CustomerFrontend (e.g. mySite) 
+3. Copy the contents of the distribution folder (mentioned above): e.g. all files and folders contained in ‘src\dist\dist\’ folder into the newly created sub-folder. 
+4. Restart Tomcat to ensure that it picks up the new site. 
+Configure the reference web user interface to communicate with the REST and Websocket listeners on the CCMM server. 
+Procedure 
+1. Edit the links.js file included in your deployed Reference Web User Interface application. Assuming you have deployed the application as described in the previous section, this file will located in: .\js\links.js. 
+Note: If you need to locate this file in the output of the ZIP file, it is located in ‘src/main/webapp/js’ and ‘src/dist/dist/js’ 
+2. Edit the URL variables contained in the links.js file to point to your CCMM server IP address or hostname (assuming you are not using a proxy server). If security is turned on for the CCMM server, the URLs must use secure protocols (wss or https) and the secure port (8445). These fields are shown below:  
+ 
+a. var webChatUrl = 'wss://<CCMM Server IP Address>:8445/CustomerControllerWeb/chat'; 
+b. var restUrl = 'https:// <CCMM Server IP Address>:8445/CustomerControllerWeb/currentqueue'; 
+c. var callbackUrl = 'https:// <CCMM Server IP Address>:8445/CustomerControllerWeb/callback'; 
+ 
+Notes: 
+• If security is not enabled on your CCMM server you should update the protocols to http and ws (non-secure) and change the port to 8081 (non-secure). 
+• If you are using High Availability, use the managed name or IP Address for the CCMM server. 
+ 
+3. Ensure that you have set the External Web Server Domain field in the Multimedia Admin component. This has already been detailed in this guide – refer to the section ‘Enabling Cross-Origin Resource Sharing Filtering’ 
+4. Ensure that EWC enabled agents are logged into a Web Communications skillset and that the skillset has been assigned a valid route-point in the Multimedia Admin application. 
+5. Use your Web browser to browse to your deployed web site and confirm that a chat request option is available. 
+
+Sample Customer Filter Messages
+=================================================================
+A sample Custom Filter Messages application is provided in zip file format and is available as part of the Enterprise Web Chat SDK software. Ensure that you have extracted the contents of the zip file to your system, e.g. C:\CustomerFilterMessages. Once extracted, the following folders are available: ‘dist’ folder: This contains a sample WAR file ‘CustomFilterMessages.war’ containing a test REST interface. This can be used to take a list of messages that will be stored in the database and applies a very basic filter to each one. In the case of this simple example, the text ‘been filtered’ will be added to the end of each message. Note: This application is intended as a basic test application to illustrate the transcript filtering integration. In a production environment, a more suitable filtering application would need to be developed. To use the test application, deploy the ‘CustomFilterMessages.war’ file on a web server e.g. Tomcat. This must not be installed on the AACC server; instead an internal network application server should be used. The server used to host this application must also have a valid security certificate. 
+‘src’ folder: This contains the source code for the Custom Filter Messages sample application. 
+
+Some customers may want to mask chat transcripts in order to hide sensitive data, such as account details etc. This functionality can be achieved in Enterprise Web Chat by making a REST call before the chat transcript is stored in the database. The sample filtering application described above can be used as a guide to integrating this feature into your solution. The procedure below explains how this can be configured and assumes you have already deployed a transcript filtering web application on a filtering web server. 
+Procedure 
+1. Open the Multimedia Administration utility. See Starting the CCMM Administration utility. 
+2. In the left pane, select Web Comms. 
+3. Click Config 
+4. In 'Transcript Filtering Web Service' put the path of the CustomerFilterMessages REST interface: 
+ 
+If security is switched off (on the CCMM server) use the server IP of the server hosting the filtering application in the path: 
+e.g. http://(IP address):8081/CustomerFilterMessages/rest/filter/ 
+ 
+OR 
+ 
+If security is switched on (on the CCMM server) use the hostname or FQDN specified in the certificate (see additional security information below): 
+e.g. https://(hostname):8445/CustomerFilterMessages/rest/filter/ 
+ 
+Note: Ensure 'CustomerFilterMessages/rest/filter/' is included after the port. 
+ 
+Additional security configuration if AACC Security is enabled (via the Certificate Manager on the CCMM server): 
+Note: These procedures assume that the AACC default certificate is being used. 
+a. The certificate name can be obtained from the server on which the CustomerFilterMessages WAR is located. 
+b. To get the cert from the CCMM server: 
+ i. Export it using certificate manager on the CCMM server. ii. Open the keystore (on AACC installs this is D:\Avaya\Contact Center\Common Components\CCKeyStore) and export the certificate from there using the command line: keytool -export -alias mydomain -file mydomain.crt -keystore keystore.jks 
+Note: 
+You can check which certificates are in the keystore with this command on the command line: keytool -list -v -keystore keystore.jks 
+You can check the cert name here. 
+c. Add the CustomerFilterMessages server's cert to the Multimedia server's keystore by copying the CustomerFilterMessages server's cert over to the keystore directory on the Multimedia server and then using this command: keytool -import trustcacerts -alias mydomain -file mydomain.crt -keystore keystore.jks 
+d. Add the Multimedia server's cert to the CustomerFilterMessages server's keystore by copying the Multimedia server’s cert over to the keystore directory on the CustomerFilterMessages server and then using this command: keytool -import 
+-trustcacerts -alias mydomain -file mydomain.crt -keystore keystore.jks 
+e. Insert the IP and cert name of the CustomerFilterMessages server into the hosts file 
+(C:\Windows\System32\drivers\etc\) of the Multimedia server 
+f. Insert the IP and cert name of the Multimedia server into the hosts file 
+(C:\Windows\System32\drivers\etc\) of the CustomerFilterMessages server 
+
+ 
+
+
+

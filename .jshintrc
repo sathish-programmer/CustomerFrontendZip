@@ -1,0 +1,66 @@
+{
+  // defines global variables exposed by a browser
+  "browser": true,
+  
+  // specifies that the code will use ECMAScript 6 syntax. Now deprecated
+  "esnext": true,
+  
+  // prohibits the use of bitwise operators (|, &, etc)
+  "bitwise": true,
+  
+  // Enforces the use of curly braces in loops and conditionals
+  "curly": true,
+  
+  // forces strict equality (===)
+  "eqeqeq": true,
+  
+  // prevents variables from being used after they are declared, but not functions
+  "latedef": "nofunc",
+  
+  // flags the use of arguments.caller and arguments.callee
+  "noarg": true,
+  
+  // deprecated, but in this instance enforces the use of single quotes for text
+  "quotmark": "single",
+  
+  // flags the use of explicitly undefined variables/functions.
+  "undef": true,
+  
+  // flag unused variables
+  "unused": false,
+  
+  // flags the lack of strict mode
+  "strict": true,
+  
+  // the maximum allowed cycloamtic complexity
+  "maxcomplexity": 15,
+  
+  // flags variables that have been declared elsewhere in the same scope
+  "shadow": "inner",
+  
+  // ignore globals exposed by jQuery or Mocha
+  "jquery": true,
+  "mocha": true,
+  
+  // define global functions and variables, so that undef will ignore these
+  // in particular, elements in the page
+  "globals" : {
+    "logToConsole" : true,
+    "getEl" : true,
+    "getSessionStorage": true,
+    "console": true,
+    "webChatUrl" : true,
+    "restUrl": true,
+    "callbackUrl": true,
+    "codes" : true,
+    "participants" : true,
+    "sendButton" : true,
+    "messages" : true,
+    "outMessage" : true,
+    "callbackRequestButton" : true,
+    "closeButton" : true,
+    "resetConnectionRetrys" : true,
+    "alert" : true,
+    "pagePushDiv" : true
+  }
+}

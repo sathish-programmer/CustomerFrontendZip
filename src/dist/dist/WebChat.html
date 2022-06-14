@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<!-- 
+    WebChat.html
+    Copyright 2015 Avaya Inc. All Rights Reserved.
+
+    Usage of this source is bound to the terms described in
+    licences/License.txt
+
+    Avaya - Confidential & Proprietary. Use pursuant to your signed agreement or
+    Avaya Policy
+ -->
+
+<html>
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Sample Customer Web Chat</title>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<script src="js/links.js"></script>
+
+<!-- syntax for grunt to replace these with the concatenated file -->
+<script src="js/avayaChat.js"></script>
+
+</head>
+<body onload="openChat()">
+
+    <!-- messages -->
+            <div id="messages"></div>
+
+            <!-- participants -->
+            <div id="usersDiv">
+                <div id="participants">
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                    <div class="hidden">
+                        <img src="" class="hidden">
+                    </div>
+                </div>
+            </div>
+
+            <div id="controls">
+                <input type="text" id="outmessage" class="chatField">
+                <button type="button" id="sendbutton-chat"
+                    onclick="sendChatMessage()" class="button">Send</button>
+                <button type="button" id="closebutton-chat" onclick="quitChat()"
+                    class="button">Close</button>
+
+                <div id="pagePushDiv" class="fold-out-pagepush">
+                    <input type="url" class="urlField" id="urlInput"
+                        placeholder="http://www.avaya.com">
+                    <button type="button" id="sendurl-chat"
+                        onclick="sendPagePushRequest()" class="button">Send Link</button>
+                </div>
+            </div>
+
+</body>
+
+</html>
